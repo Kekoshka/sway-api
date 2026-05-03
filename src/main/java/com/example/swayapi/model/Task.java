@@ -1,5 +1,6 @@
 package com.example.swayapi.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,8 +21,9 @@ public class Task {
     private String toUserId;
     private String title;
     private String date;
+    @JsonProperty("is_done")
     @Column(name = "is_done")
-    private boolean isDone;
+    private boolean done;
     @Column(name = "created_at_ms")
     private Long createdAtMs;
     @Column(name = "done_at_ms")
