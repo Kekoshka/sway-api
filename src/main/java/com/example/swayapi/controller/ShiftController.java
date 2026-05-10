@@ -26,9 +26,12 @@ public class ShiftController {
     }
 
     @GetMapping("/team/{teamId}")
-    public List<Shift> getByTeam(@PathVariable Long teamId,
-                                 @RequestParam String date) {
-        return repo.findByTeamIdAndDate(teamId, date);
+    public ResponseEntity<List<Shift>> getTeamShifts(
+        @PathVariable Long teamId,
+        @RequestParam String date) {
+        List<Shift> shifts = shiftRepository
+            .findByTeamIdAndDate(teamId, date);
+        return ResponseEntity.ok(shifts);
     }
 
     @GetMapping("/user/{userId}")
