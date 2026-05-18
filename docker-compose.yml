@@ -11,8 +11,6 @@ services:
       MYSQL_PASSWORD: sway_pass
     ports:
       - "3307:3306"
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
