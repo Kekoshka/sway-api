@@ -1,4 +1,4 @@
-USE sway_db;
+USE default_db;
 
 CREATE TABLE IF NOT EXISTS users (
     id          VARCHAR(128) PRIMARY KEY,
