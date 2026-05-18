@@ -1,13 +1,40 @@
 services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: sway-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: sway_root_pass
+      MYSQL_DATABASE: sway_db
+      MYSQL_USER: sway_user
+      MYSQL_PASSWORD: sway_pass
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   api:
     build: .
     container_name: sway-api
     restart: always
     ports:
-      - "8080:8080"
+      - "5001:80"
     environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/sway_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: sway_user
+      SPRING_DATASOURCE_PASSWORD: sway_pass
       SPRING_DATASOURCE_URL: jdbc:mysql://192.168.0.5:3306/default_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-      SPRING_DATASOURCE_USERNAME: gen_user
+      SPRING_DATASOURCE_USERNAME: SwayAPI
       SPRING_DATASOURCE_PASSWORD: qI;>zMZ7Mc*%z<
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+    depends_on:
+      mysql:
+        condition: service_healthy
