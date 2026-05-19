@@ -37,4 +37,9 @@ public class TeamController {
         team.setId(id);
         return ResponseEntity.ok(repo.save(team));
     }
+
+    @GetMapping("/owner/{ownerId}")
+    public ResponseEntity<List<Team>> getAllByOwner(@PathVariable String ownerId) {
+        return ResponseEntity.ok(repo.findAllByOwnerId(ownerId));
+    }
 }
