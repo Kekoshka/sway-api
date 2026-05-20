@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.swayapi.repository.TeamMemberRepository;
 import com.example.swayapi.repository.ShiftRepository;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @RestController
@@ -48,15 +49,16 @@ public class TeamController {
         return ResponseEntity.ok(repo.findAllByOwnerId(ownerId));
     }
 
+    @Transactional
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-    try {
-        memberRepo.deleteByTeamId(id);
-        repo.deleteById(id);
-        return ResponseEntity.ok().build();
-            } catch (Exception e) {
-                System.out.println("DELETE TEAM ERROR: " + e.getMessage());
-        return ResponseEntity.internalServerError().build();
+        try {
+            memberRepo.deleteByTeamId(id);
+            repo.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            System.out.println("DELETE TEAM ERROR: " + e.getMessage());
+            return ResponseEntity.internalServerError().build();
         }
     }
 }
