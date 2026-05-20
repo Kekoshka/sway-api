@@ -50,8 +50,13 @@ public class TeamController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        memberRepo.findByTeamId(id).forEach(m -> memberRepo.deleteById(m.getId()));
+    try {
+        memberRepo.deleteByTeamId(id);
         repo.deleteById(id);
         return ResponseEntity.ok().build();
+            } catch (Exception e) {
+                System.out.println("DELETE TEAM ERROR: " + e.getMessage());
+        return ResponseEntity.internalServerError().build();
+        }
     }
 }
