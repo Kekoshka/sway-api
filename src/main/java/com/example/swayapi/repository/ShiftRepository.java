@@ -8,4 +8,5 @@ public interface ShiftRepository extends JpaRepository<Shift, Long> {
     List<Shift> findByTeamIdAndDate(Long teamId, String date);
     List<Shift> findByUserIdOrderByDateDesc(String userId);
     Optional<Shift> findByUserIdAndDate(String userId, String date);
+    List<Shift> findByTeamId(Long teamId);
 }
