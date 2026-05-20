@@ -5,6 +5,8 @@ import com.example.swayapi.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.swayapi.repository.TeamMemberRepository;
+import com.example.swayapi.repository.ShiftRepository;
 import java.util.List;
 
 @RestController
@@ -12,6 +14,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TeamController {
     private final TeamRepository repo;
+    private final TeamMemberRepository memberRepo;  
+    private final ShiftRepository shiftRepo; 
 
     @PostMapping
     public ResponseEntity<Team> create(@RequestBody Team team) {
@@ -42,5 +46,12 @@ public class TeamController {
     @GetMapping("/owner/{ownerId}")
     public ResponseEntity<List<Team>> getAllByOwner(@PathVariable String ownerId) {
         return ResponseEntity.ok(repo.findAllByOwnerId(ownerId));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        memberRepo.findByTeamId(id).forEach(m -> memberRepo.deleteById(m.getId()));
+        repo.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }
