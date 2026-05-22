@@ -36,17 +36,20 @@ CREATE TABLE IF NOT EXISTS team_members (
 );
 
 CREATE TABLE IF NOT EXISTS shifts (
-    id              BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id         VARCHAR(128) NOT NULL,
-    team_id         BIGINT NOT NULL,
-    date            VARCHAR(10) NOT NULL,
-    planned_start   VARCHAR(10),
-    planned_end     VARCHAR(10),
-    actual_start_ms BIGINT DEFAULT 0,
-    break_start_ms  BIGINT DEFAULT 0,
-    break_end_ms    BIGINT DEFAULT 0,
-    actual_end_ms   BIGINT DEFAULT 0,
-    status          VARCHAR(20) DEFAULT 'absent',
+    id                  BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id             VARCHAR(128) NOT NULL,
+    team_id             BIGINT NOT NULL,
+    date                VARCHAR(10) NOT NULL,
+    planned_start       VARCHAR(10),
+    planned_end         VARCHAR(10),
+    actual_start_ms     BIGINT DEFAULT 0,
+    break_start_ms      BIGINT DEFAULT 0,
+    break_end_ms        BIGINT DEFAULT 0,
+    actual_end_ms       BIGINT DEFAULT 0,
+    status              VARCHAR(20) DEFAULT 'absent',
+    ignored_time_ms     BIGINT DEFAULT 0,
+    paused_by_ignore_ms BIGINT DEFAULT 0,
+    total_break_ms      BIGINT DEFAULT 0,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE
 );
