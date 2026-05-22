@@ -10,7 +10,13 @@ import java.util.Optional;
 
 public interface TeamMemberRepository extends JpaRepository<TeamMember, Long> {
     List<TeamMember> findByTeamId(Long teamId);
-    Optional<TeamMember> findByUserId(String userId);
+
+    // Один любой по userId (если где-то используется — оставляем под другим именем)
+    Optional<TeamMember> findFirstByUserId(String userId);
+
+    // Все записи по userId (для каскадного обновления)
+    List<TeamMember> findAllByUserId(String userId);
+
     Optional<TeamMember> findByTeamIdAndUserId(Long teamId, String userId);
 
     @Modifying
