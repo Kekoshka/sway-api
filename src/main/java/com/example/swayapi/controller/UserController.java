@@ -26,7 +26,7 @@ public class UserController {
         User saved = repo.save(user);
         System.out.println(">>> User saved");
 
-        List<TeamMember> memberships = teamMemberRepo.findByUserId(saved.getId());
+       List<TeamMember> memberships = teamMemberRepo.findAllByUserId(saved.getId());
         System.out.println(">>> Found memberships: " + memberships.size());
         
         for (TeamMember m : memberships) {
