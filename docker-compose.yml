@@ -8,5 +8,5 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://192.168.0.5:3306/default_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: gen_user
-      SPRING_DATASOURCE_PASSWORD: Vay-{R0UAb9*-v
+      SPRING_DATASOURCE_PASSWORD: I,H5QAbohqroPr
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
